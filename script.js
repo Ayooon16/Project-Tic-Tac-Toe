@@ -3,7 +3,7 @@ const Gameboard = {
     players: {},
     won: false,
     player: 'x',
-    winner:'',
+    winner: '',
     checkWinner() {
         cs = this.currentScore
         const combs = [
@@ -21,19 +21,18 @@ const Gameboard = {
                 cs[el[0]] == cs[el[1]] && cs[el[1]] == cs[el[2]] && cs[el[0]] != ''
             ) {
                 this.won = true
-this.winner=cs[el[0]]
+                this.winner = cs[el[0]]
 
             }
         }
         )
-        if(this.won){
+        if (this.won) {
             this.gameOver(this.winner)
 
         }
         else if (
             !this.won && !cs.includes('')
         ) {
-            console.log(this.win)
             this.gameOver('draw')
         }
     },
@@ -42,12 +41,12 @@ this.winner=cs[el[0]]
             for (const key in this.players) {
                 const player = this.players[key];
                 if (player.marker === winner) {
-                    console.log(player.name + ' has won the game!');
+                    this.addScore(player.name);
                 }
             }
         }
         else if (winner == 'draw') {
-            console.log('Draw')
+            this.addScore("Draw")
         }
         this.resetBoard()
     },
@@ -55,7 +54,7 @@ this.winner=cs[el[0]]
         this.currentScore[cell] = this.player
         cell = document.getElementById(cell)
         cell.classList.add(this.player)
-        cell.onclick=null
+        cell.onclick = null
         this.player = ((this.player == 'x') ? 'o' : 'x')
         this.checkWinner()
     },
@@ -67,17 +66,25 @@ this.winner=cs[el[0]]
             }
         })
     },
-    resetBoard(){
-        this.currentScore=['', '', '', '', '', '', '', '', '']
-        this.player='x'
-        this.won=(false)
-this.winner=''
+    resetBoard() {
+        this.currentScore = ['', '', '', '', '', '', '', '', '']
+        this.player = 'x'
+        this.won = (false)
+        this.winner = ''
         var elems = document.querySelectorAll('.cell')
         elems.forEach(element => {
-    element.className='cell'
+            element.className = 'cell'
         },
-    this.addOnclick()
+            this.addOnclick()
         )
+    },
+    addScore(winner) {
+        table = document.getElementById('scores')
+        row = document.createElement('tr')
+        td = document.createElement("td")
+        td.textContent=winner
+        row.appendChild(td)
+        table.appendChild(row)
     }
 }
 function Player(name, marker) {
@@ -85,8 +92,8 @@ function Player(name, marker) {
     this.marker = marker;
 }
 
-window.onload = function(){
+window.onload = function () {
     Gameboard.addOnclick()
 }
-    Gameboard.players.player1 = new Player(prompt("First player's name"), 'x');
+Gameboard.players.player1 = new Player(prompt("First player's name"), 'x');
 Gameboard.players.player2 = new Player(prompt("Second player's name"), 'o');
