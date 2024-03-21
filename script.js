@@ -1,8 +1,9 @@
 const Gameboard = {
     defScore: ['', '', '', '', '', '', '', '', ''],
-    currentScore: ['o', 'x', 'o', 'x', 'o', 'x', 'x', 'o', 'x'],
+    currentScore: ['', '', '', '', '', '', '', '', ''],
     players: {},
     won : false,
+    player : 'x',
     checkWinner() {
         cs = this.currentScore
         const combs = [
@@ -42,12 +43,26 @@ const Gameboard = {
         else if (winner == 'draw') {
             console.log('Draw')
         }
+    },
+    editBoard(cell){
+        this.currentScore[cell]=this.player
+        document.getElementById(cell).classList.add(this.player)
+        this.player = ((this.player=='x')? 'o' : 'x')
+        this.checkWinner()
     }
 }
 function Player(name, marker) {
     this.name = name;
     this.marker = marker;
 }
+
+window.onload = function() {
+    var elems = document.querySelectorAll('.cell')
+    elems.forEach(element => {
+        element.onclick = function() {
+            Gameboard.editBoard(this.id)
+        }
+    });
+}
 Gameboard.players.player1 = new Player(prompt("First player's name"), 'x');
 Gameboard.players.player2 = new Player(prompt("Second player's name"), 'o');
-Gameboard.checkWinner()
