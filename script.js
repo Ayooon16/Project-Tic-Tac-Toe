@@ -32,10 +32,10 @@ const Gameboard = {
         }
     }
 }}
-function Player(name, marker, name2, marker2) {
+function Player(name, marker) {
     this.name = name;
     this.marker = marker;
 }
-Gameboard.players.player1 = new Player('Player 1', 'x');
-Gameboard.players.player2 = new Player('Player 2', 'o');
-console.log(Gameboard.checkWinner())
+Gameboard.players.player1 = new Player(prompt("First player's name"), 'x');
+Gameboard.players.player2 = new Player(prompt("Second player's name"), 'o');
+Gameboard.checkWinner()
