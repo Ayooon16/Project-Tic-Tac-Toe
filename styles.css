@@ -7,3 +7,14 @@
     display: grid;
     grid-template: 1fr 1fr 1fr/1fr 1fr 1fr;
 }
+.x{
+    background-image: url("x.png");
+    background-size: cover;
+    background-position-x: -8px;
+}
+.o{
+    background-image: url("o.png");
+    background-size: cover;
+    background-position-x: 5px;
+
+}
