@@ -1,17 +1,9 @@
 const Gameboard = {
-    defScore: ['', '', '', '', '', '', '', '', ''],
     currentScore: ['', '', '', '', '', '', '', '', ''],
     players: {},
     won: false,
     player: 'x',
-    addOnclick() {
-        var elems = document.querySelectorAll('.cell')
-        elems.forEach(element => {
-            element.onclick = function () {
-                Gameboard.editBoard(this.id)
-            }
-        })
-    },
+    winner:'',
     checkWinner() {
         cs = this.currentScore
         const combs = [
@@ -28,14 +20,20 @@ const Gameboard = {
             if (
                 cs[el[0]] == cs[el[1]] && cs[el[1]] == cs[el[2]] && cs[el[0]] != ''
             ) {
-                this.gameOver(cs[el[0]])
                 this.won = true
+this.winner=cs[el[0]]
+
             }
         }
         )
-        if (
+        if(this.won){
+            this.gameOver(this.winner)
+
+        }
+        else if (
             !this.won && !cs.includes('')
         ) {
+            console.log(this.win)
             this.gameOver('draw')
         }
     },
@@ -51,6 +49,7 @@ const Gameboard = {
         else if (winner == 'draw') {
             console.log('Draw')
         }
+        this.resetBoard()
     },
     editBoard(cell) {
         this.currentScore[cell] = this.player
@@ -59,6 +58,26 @@ const Gameboard = {
         cell.onclick=null
         this.player = ((this.player == 'x') ? 'o' : 'x')
         this.checkWinner()
+    },
+    addOnclick() {
+        var elems = document.querySelectorAll('.cell')
+        elems.forEach(element => {
+            element.onclick = function () {
+                Gameboard.editBoard(this.id)
+            }
+        })
+    },
+    resetBoard(){
+        this.currentScore=['', '', '', '', '', '', '', '', '']
+        this.player='x'
+        this.won=(false)
+this.winner=''
+        var elems = document.querySelectorAll('.cell')
+        elems.forEach(element => {
+    element.className='cell'
+        },
+    this.addOnclick()
+        )
     }
 }
 function Player(name, marker) {
