@@ -2,8 +2,16 @@ const Gameboard = {
     defScore: ['', '', '', '', '', '', '', '', ''],
     currentScore: ['', '', '', '', '', '', '', '', ''],
     players: {},
-    won : false,
-    player : 'x',
+    won: false,
+    player: 'x',
+    addOnclick() {
+        var elems = document.querySelectorAll('.cell')
+        elems.forEach(element => {
+            element.onclick = function () {
+                Gameboard.editBoard(this.id)
+            }
+        })
+    },
     checkWinner() {
         cs = this.currentScore
         const combs = [
@@ -20,8 +28,8 @@ const Gameboard = {
             if (
                 cs[el[0]] == cs[el[1]] && cs[el[1]] == cs[el[2]] && cs[el[0]] != ''
             ) {
-                 this.gameOver(cs[el[0]])
-                 this.won = true
+                this.gameOver(cs[el[0]])
+                this.won = true
             }
         }
         )
@@ -44,10 +52,12 @@ const Gameboard = {
             console.log('Draw')
         }
     },
-    editBoard(cell){
-        this.currentScore[cell]=this.player
-        document.getElementById(cell).classList.add(this.player)
-        this.player = ((this.player=='x')? 'o' : 'x')
+    editBoard(cell) {
+        this.currentScore[cell] = this.player
+        cell = document.getElementById(cell)
+        cell.classList.add(this.player)
+        cell.onclick=null
+        this.player = ((this.player == 'x') ? 'o' : 'x')
         this.checkWinner()
     }
 }
@@ -56,13 +66,8 @@ function Player(name, marker) {
     this.marker = marker;
 }
 
-window.onload = function() {
-    var elems = document.querySelectorAll('.cell')
-    elems.forEach(element => {
-        element.onclick = function() {
-            Gameboard.editBoard(this.id)
-        }
-    });
+window.onload = function(){
+    Gameboard.addOnclick()
 }
-Gameboard.players.player1 = new Player(prompt("First player's name"), 'x');
+    Gameboard.players.player1 = new Player(prompt("First player's name"), 'x');
 Gameboard.players.player2 = new Player(prompt("Second player's name"), 'o');
