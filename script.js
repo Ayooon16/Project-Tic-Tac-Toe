@@ -1,6 +1,7 @@
-currentScore = ['x', 'x', 'o', 'x', 'o', 'x', 'x', 'x', 'x']
-function checkWinner(cs) {
-    ;
+const Gameboard = {
+currentScore : ['x', 'x', 'o', 'x', 'o', 'x', 'x', 'x', 'x'],
+checkWinner() {
+    cs = this.currentScore
     const combs = [
         [0, 1, 2],
         [3, 4, 5],
@@ -19,5 +20,10 @@ function checkWinner(cs) {
         }
     
 });
-}
-console.log(checkForWinner(currentScore))
+}}
+function Player(name, marker) {
+    this.name = name;
+    this.marker = marker;
+  }
+
+console.log(Gameboard.checkWinner())
